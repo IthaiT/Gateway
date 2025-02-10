@@ -16,11 +16,11 @@ SRCS += $(shell find thirdparty -type f -name "*.c")
 OBJS = $(SRCS:.c=.o)
 
 testBuffer: $(OBJS) test/testBuffer.o
-	-@$(CC) $(CFLAGS) -o $@ $^
+	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	-@./$@
 	-@$(RM) $@ $^
 
 testMQTT: $(OBJS) test/testMQTT.o
 	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	-@./$@
-#	-@$(RM) $@ $^
+	-@$(RM) $@ $^
