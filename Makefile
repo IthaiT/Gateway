@@ -6,8 +6,7 @@ CFLAGS += -I/home/ithai/learning/gateway
 #ifdef CROSS_COMPILE
 #CFLAGS += --sysroot=$(TOOLCHAIN_DIR)/sysroot
 #endif
-#LDFLAGS += -lpaho-mqtt3c -lcurl -lcrypto
-
+LDFLAGS += -lpaho-mqtt3c
 
 SRCS += $(shell find app -type f -name "*.c")
 SRCS += $(shell find daemon -type f -name "*.c")
@@ -20,3 +19,8 @@ testBuffer: $(OBJS) test/testBuffer.o
 	-@$(CC) $(CFLAGS) -o $@ $^
 	-@./$@
 	-@$(RM) $@ $^
+
+testMQTT: $(OBJS) test/testMQTT.o
+	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	-@./$@
+#	-@$(RM) $@ $^

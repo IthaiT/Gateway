@@ -1,5 +1,5 @@
-#ifndef __BUFFER__H__
-#define __BUFFER__H__
+#ifndef __BUFFER_H__
+#define __BUFFER_H__
 
 #include <pthread.h>
 

@@ -79,7 +79,13 @@ int appBufferWrite(Buffer *buffer, char *data, int len)
 int appBufferDestroy(Buffer *buffer)
 {
     pthread_mutex_destroy(&buffer->mutex);
-    free(buffer->ptr);
+    if(buffer->ptr!= NULL){
+        free(buffer->ptr);
+        buffer->ptr = NULL;
+    }
+    buffer->len = 0;
+    buffer->size = 0;
+    buffer->start = 0;
     log_debug("buffer destroy success");
     return 0;
 }
