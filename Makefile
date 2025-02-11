@@ -29,3 +29,8 @@ testMessage: $(OBJS) test/testMessage.o
 	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	-@./$@
 	-@$(RM) $@ $^
+
+testTask: $(OBJS) test/testTask.o
+	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	-@./$@
+	-@$(RM) $@ $^
