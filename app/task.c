@@ -50,11 +50,13 @@ int appTaskInit(int num){
     }
     memset(task_threads, 0, num * sizeof(pthread_t));
     // 创建线程
+    int arg[num];//方便调试
+    for(int i = 0; i < num; i++){
+        arg[i] = i;
+    }
     for (int i = 0; i < thread_num; i++)
     {
-        int* id = malloc(sizeof(int));
-        *id = i;
-        if (pthread_create(&task_threads[i], NULL, task_executer, id) != 0)
+        if (pthread_create(&task_threads[i], NULL, task_executer, &arg[i]) != 0)
         {
             log_error("Failed to create task thread %d", i);
             for(int j = 0; j < i; j++){
