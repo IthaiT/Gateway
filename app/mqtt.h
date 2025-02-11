@@ -3,8 +3,8 @@
 
 #define MQTT_SERVER "tcp://localhost:1883"
 #define CLIENT_ID "ithai-ubuntu-c0f6cc06be52"
-#define PULL_TOPIC "TEST_TOPIC"
-#define PUSH_TOPIC "TEST_TOPIC"
+#define PULL_TOPIC "PULL_TOPIC"
+#define PUSH_TOPIC "PUSH_TOPIC"
 #define QOS 0
 
 /**

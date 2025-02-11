@@ -24,3 +24,8 @@ testMQTT: $(OBJS) test/testMQTT.o
 	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
 	-@./$@
 	-@$(RM) $@ $^
+
+testMessage: $(OBJS) test/testMessage.o
+	-@$(CC) $(CFLAGS) -o $@ $^ $(LDFLAGS)
+	-@./$@
+	-@$(RM) $@ $^
