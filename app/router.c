@@ -80,7 +80,7 @@ int appMQTTCallback(char* json_str, int len){
 int appDeviceCallback(void* binary_data, int len){
     //将下层传递上来的二进制数据转化为json格式数据
     Message message;
-    if(appBinaryToMessage(binary_data, &message, len)<0){
+    if(appBinaryToMessage((char*)binary_data, &message, len)<0){
         return -1;
     }
     char json_data[1024];
