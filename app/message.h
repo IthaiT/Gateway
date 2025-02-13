@@ -19,17 +19,17 @@
  */
 
 // 连接类型（哪种设备连接）
-typedef enum ConnetionTypeEnum
+typedef enum ConnectionTypeEnum
 {
     CONNECTION_TYPE_NONE = 0, // 未知设备
     CONNECTION_TYPE_LORA = 1, // LoRa设备
     CONNECTION_TYPE_BLE = 2,  // BLE设备
-} ConnetionType;
+} ConnectionType;
 
 // 消息结构体
 typedef struct message_t
 {
-    ConnetionType connectionType;
+    ConnectionType connectionType;
     char *payload; // 真实数据
     int id_len;    // 设备ID长度
     int data_len;  // 数据长度
