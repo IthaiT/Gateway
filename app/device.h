@@ -39,7 +39,7 @@ typedef struct DeviceVTableStruct
  * @param connectionType 连接类型
  * @return int 0表示成功，-1表示失败
  */
-int appDeviceInit(Device *device, char *filename, ConnectionType connectionType);
+int appDeviceInit(Device *device, char *filename);
 /**
  * @brief 启动设备
  *

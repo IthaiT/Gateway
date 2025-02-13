@@ -5,28 +5,28 @@
 #include "thirdparty/cJSON/cJSON.h"
 
 /**
- * @brief 将字节数组转换为十六进制字符串
+ * @brief 内部函数，将字节数组转换为十六进制字符串
  * 
  * @param bin 字节数组
  * @param hex 十六进制字符串
  * @param len 字节数组长度
  * @return 0 成功，-1 失败
  */
-int bintohex(char *bin, char *hex, int len){
+static int bintohex(char *bin, char *hex, int len){
     for(int i = 0; i < len; i++){
         sprintf(hex + i * 2, "%02x", (unsigned char)bin[i]);
     }
     return 0;
 }
 /**
- * @brief 将十六进制字符串转换为字节数组
+ * @brief 内部函数，将十六进制字符串转换为字节数组
  * 
  * @param hex 十六进制字符串
  * @param bin 字节数组
  * @param len 字节数组长度
  * @return 0 成功，-1 失败
  */
-int hextobin(char *hex, char *bin, int len){
+static int hextobin(char *hex, char *bin, int len){
     if(strlen(hex) % 2!= 0){
         log_error("hex string length not correct");
         return -1;

@@ -8,11 +8,11 @@
 #include <unistd.h>
 
 #define BUFFER_SIZE 16384
-void defaultSendTask(void *args);
-void defaultReceiveTask(void *args);
-void *backgroundThreadFunc(void *args);
+static void defaultSendTask(void *args);
+static void defaultReceiveTask(void *args);
+static void *backgroundThreadFunc(void *args);
 
-int appDeviceInit(Device *device, char *filename, ConnectionType connectionType)
+int appDeviceInit(Device *device, char *filename)
 {
     // 为Device结构体分配内存
     device->deviceVTable = malloc(sizeof(DeviceVTable));
@@ -42,9 +42,8 @@ int appDeviceInit(Device *device, char *filename, ConnectionType connectionType)
     }
     // 初始化Device结构体
     strcpy(device->filename, filename);
-    device->connectionType = connectionType;
     device->isrunning = 0;
-    device->fd = open(filename, O_RDWR | O_NOCTTY);
+    device->fd = open(filename, O_RDWR | O_NOCTTY);//防止将设备打开为终端设备
     if (device->fd < 0)
     {
         log_error("device open failed");
@@ -147,9 +146,9 @@ int appDeivceWrite(Device *device, void *data, int len)
 }
 
 /**
- * @brief 设备后台线程，不断地读取设备数据，写入缓存区，然后注册接受任务
+ * @brief 内部函数，设备后台线程，不断地读取设备数据，写入缓存区，然后注册接受任务
  */
-void *backgroundThreadFunc(void *args)
+static void *backgroundThreadFunc(void *args)
 {
     Device *device = (Device *)args;
     char buf[1024];
@@ -178,11 +177,11 @@ void *backgroundThreadFunc(void *args)
 }
 
 /**
- * @brief 默认的接收任务，从接收缓冲区中读取数据，并调用接收回调函数处理数据
+ * @brief 内部函数，默认的接收任务，从接收缓冲区中读取数据，并调用接收回调函数处理数据
  *
  * @param device 设备结构体
  */
-void defaultReceiveTask(void *args)
+static void defaultReceiveTask(void *args)
 {
     Device *device = (Device *)args;
     // 从接收缓冲区中读取数据
@@ -198,11 +197,11 @@ void defaultReceiveTask(void *args)
 }
 
 /**
- * @brief 默认的发送任务，从发送缓冲区中读取数据，并调用写前处理函数处理数据，然后写入设备
+ * @brief 内部函数，默认的发送任务，从发送缓冲区中读取数据，并调用写前处理函数处理数据，然后写入设备
  *
  * @param device 设备结构体
  */
-void defaultSendTask(void *args)
+static void defaultSendTask(void *args)
 {
     Device *device = (Device *)args;
     char buf[1024];

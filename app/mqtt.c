@@ -9,18 +9,18 @@ static MQTTClient_connectOptions conn_opts = MQTTClient_connectOptions_initializ
 static MQTTClient_deliveryToken token; // MQTT消息token
 static int (*recvCallback)(char*, int);// MQTT消息接收回调函数
 /**
- * @brief 连接丢失回调函数
+ * @brief 内部函数，连接丢失回调函数
  * 
  * @param context 回调上下文
  * @param cause 丢失原因
  */
-void conn_lost(void *context, char *cause) {
+static void conn_lost(void *context, char *cause) {
     assert(context == NULL);
     log_error("MQTT connection lost: %s", cause);
     exit(EXIT_FAILURE);
 }
 /**
- * @brief 消息接收回调函数
+ * @brief 内部函数，消息接收回调函数
  * 
  * @param context 回调上下文
  * @param topicName 主题名称
@@ -28,7 +28,8 @@ void conn_lost(void *context, char *cause) {
  * @param message 消息
  * @return int 0表示成功，其他表示失败
  */
-int message_received(void *context, char *topicName, int topicLen, MQTTClient_message *message) {
+static int message_received(void *context, char *topicName, int topicLen, MQTTClient_message *message)
+{
     assert(context == NULL);
     log_debug("MQTT message received: %s, topic: %s, len: %d", (char*)message->payload, topicName, message->payloadlen);
     int result = recvCallback((char*)message->payload, message->payloadlen);
@@ -36,13 +37,14 @@ int message_received(void *context, char *topicName, int topicLen, MQTTClient_me
 }
 
 /**
- * @brief 消息发送完成回调函数
+ * @brief 内部函数，消息发送完成回调函数
  * 
  * @param context 回调上下文
  * @param token 消息token
  * @return void
  */
-void delivery_complete(void *context, MQTTClient_deliveryToken token) {
+static void delivery_complete(void *context, MQTTClient_deliveryToken token)
+{
     assert(context == NULL);
     log_trace("MQTT delivery complete: token %d", token);
 }
